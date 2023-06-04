@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Navigation</title>
+  </head>
+  <body>
+    <h1>Web Page Navigation</h1>
+
+    <div id="content">
+      <!-- Page content will be dynamically loaded here -->
+    </div>
+
+    <div>
+      <a href="#page1">Page 1</a>
+      <a href="#page2">Page 2</a>
+      <a href="#page3">Page 3</a>
+    </div>
+
+    <button id="prevButton" onclick="previousPage()">Previous</button>
+    <button id="nextButton" onclick="nextPage()">Next</button>
+
+    <script>
+      // Function to navigate to the previous page
+      function previousPage() {
+        history.back();
+        displayPageContent();
+      }
+
+      // Function to navigate to the next page
+      function nextPage() {
+        history.forward();
+        displayPageContent();
+      }
+
+      // Function to display the content of the current page
+      function displayPageContent() {
+        const page = window.location.hash.substr(1); // Get the page name from the URL hash
+
+        // Define the content for each page
+        const pages = {
+          page1: "This is Page 1",
+          page2: "This is Page 2",
+          page3: "This is Page 3",
+        };
+
+        // Display the content based on the current page
+        const contentElement = document.getElementById("content");
+        if (pages.hasOwnProperty(page)) {
+          contentElement.textContent = pages[page];
+        } else {
+          contentElement.textContent = "Page not found";
+        }
+
+        // Update the visibility of the previous and next buttons based on the current page
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+        if (page === "page1") {
+          prevButton.style.display = "none";
+          nextButton.style.display = "inline-block";
+        } else if (page === "page2") {
+          prevButton.style.display = "inline-block";
+          nextButton.style.display = "inline-block";
+        } else if (page === "page3") {
+          prevButton.style.display = "inline-block";
+          nextButton.style.display = "none";
+        }
+      }
+
+      // Event listener to detect when the hash in the URL changes
+      window.addEventListener("hashchange", displayPageContent);
+
+      // Display the content of the initial page
+      displayPageContent();
+    </script>
+  </body>
+</html>
